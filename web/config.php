@@ -28,6 +28,8 @@ $symfonyRequirements = new SymfonyRequirements();
 
 $majorProblems = $symfonyRequirements->getFailedRequirements();
 $minorProblems = $symfonyRequirements->getFailedRecommendations();
+$hasMajorProblems = (bool) count($majorProblems);
+$hasMinorProblems = (bool) count($minorProblems);
 
 ?>
 <!DOCTYPE html>
@@ -61,7 +63,7 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
             }
             .sf-reset ul a,
             .sf-reset ul a:hover {
-                background: url(../images/blue-arrow.png) no-repeat right 6px;
+                background: url(./images/blue-arrow.png) no-repeat right 6px;
                 padding-right: 10px;
             }
             .sf-reset ul, ol {
@@ -98,7 +100,7 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
             }
             .sf-reset p.help {
                 padding: 12px 16px;
-                word-break: break-word;
+                word-break: break-all;
             }
             .version {
                 text-align: right;
@@ -158,7 +160,7 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
                             ready to run Symfony applications.
                         </p>
 
-                        <?php if (count($majorProblems)): ?>
+                        <?php if ($hasMajorProblems): ?>
                             <h2 class="ko">Major problems</h2>
                             <p>Major problems have been detected and <strong>must</strong> be fixed before continuing:</p>
                             <ol>
@@ -170,10 +172,10 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
                             </ol>
                         <?php endif; ?>
 
-                        <?php if (count($minorProblems)): ?>
+                        <?php if ($hasMinorProblems): ?>
                             <h2>Recommendations</h2>
                             <p>
-                                <?php if (count($majorProblems)): ?>Additionally, to<?php else: ?>To<?php endif; ?> enhance your Symfony experience,
+                                <?php if ($hasMajorProblems): ?>Additionally, to<?php else: ?>To<?php endif; ?> enhance your Symfony experience,
                                 it’s recommended that you fix the following:
                             </p>
                             <ol>
@@ -195,12 +197,12 @@ $minorProblems = $symfonyRequirements->getFailedRecommendations();
                             </p>
                         <?php endif; ?>
 
-                        <?php if (!count($majorProblems) && !count($minorProblems)): ?>
+                        <?php if (!$hasMajorProblems && !$hasMinorProblems): ?>
                             <p class="ok">All checks passed successfully. Your system is ready to run Symfony applications.</p>
                         <?php endif; ?>
 
                         <ul class="symfony-install-continue">
-                            <?php if (count($majorProblems) || count($minorProblems)): ?>
+                            <?php if ($hasMajorProblems || $hasMinorProblems): ?>
                                 <li><a href="config.php">Re-check configuration</a></li>
                             <?php endif; ?>
                         </ul>
