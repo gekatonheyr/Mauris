@@ -1,3 +1,15 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+app_bundle_users:
+    resource: "@AppBundle/Controller/UserController.php"
+    type:     rest
+
+app_bundle_stat:
+    resource: "@AppBundle/Controller/StatController.php"
+    type:     rest
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix: /api/doc

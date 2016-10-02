@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>404 Not found exception appeared!!!</h1>
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+{# ... #}
+{% endif %}
+
+<p>
+    <h3>{{ status_text }}</h3>
+    <h4>{{ exception.message }}</h4>
+    {#The requested page couldn't be located. Checkout for any URL
+    misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.#}
+</p>
+{% endblock %}
