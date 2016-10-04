@@ -15,7 +15,7 @@ class statController extends FOSRestController
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\Route("/api/stat/regUserVisit", name="REST_regUserVisit", requirements={"_format"="json"})
+     * @Rest\Route("/api/stat/regUsersVisit", name="REST_regUsersVisit", requirements={"_format"="json"})
      * @Method("POST")
      * @Rest\View()
      * @ApiDoc()
@@ -53,7 +53,7 @@ class statController extends FOSRestController
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Rest\Route("/api/stat/getDAU", name="REST_regUserVisit", requirements={"_format"="json"})
+     * @Rest\Route("/api/stat/getDAU", name="REST_getDAU", requirements={"_format"="json"})
      * @Method("POST")
      * @Rest\View()
      * @ApiDoc()
