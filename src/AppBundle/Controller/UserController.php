@@ -64,7 +64,6 @@ class UserController extends FOSRestController
         $list = $request->request->all();
         if(empty($list)) throw new BadRequestHttpException("Empty json request.");
         $user = new User();
-        $user_properties = $user->getPropertiesList();
         $em = $this->getDoctrine()->getManager();
         $content = array("status"=>"successful");
         $status = 200;
@@ -87,7 +86,7 @@ class UserController extends FOSRestController
             }
             $duplicate_check_result = $users_repo->findBy($check_criteria);
             if(count($duplicate_check_result)){
-                $criteria_string = print_r($check_criteria, true);
+                $criteria_string = str_replace(['Array','(',')'],'', print_r($check_criteria, true));
                 $warning_list[] = "User {$criteria_string} already exist and couldn't be created again.";
                 $check_criteria = array();
                 unset($list[$user_key]);
@@ -97,15 +96,16 @@ class UserController extends FOSRestController
         }
         try{
             $em->getConnection()->beginTransaction();
-            if(!count($list)) throw new \Exception("Users already exist. For more info see reasons.");
+            if(!count($list)) throw new \Exception("Users already exist. ");
             $em->flush();
             $em->getConnection()->commit();
         }catch(\Exception $e){
             $em->getConnection()->rollBack();
             $status = 409;
             $content["status"]="error";
-            $content["reasons"] = $warning_list;
-            throw new ConflictHttpException($e->getMessage(), null, $status);
+            $given_params_values = implode(' ', $warning_list);
+            $message = $e->getMessage()."Reasons: $given_params_values ";
+            throw new ConflictHttpException($message, null, $status);
         }
 
         $status = 201;
